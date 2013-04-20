@@ -3,7 +3,8 @@ ANSI_Common_Lisp-solutions
 
 Solutions to the end-chapter exercises in Paul Graham's "ANSI Common Lisp".
 
-=== Warnings and Disclaimers ===
+Warnings and Disclaimers
+------------------------
 
 Since I'm paranoid of being accused of plagiarism, or using execerpts of
 someone else's copyrighted work without permission, in any case where I've
@@ -17,3 +18,14 @@ carried over their de-facto conventions for curly-braces, and applied it to the
 way I use parentheses in Lisp.  I know, you're supposed to put all trailing
 parens on the same line whenever possible, but I just haven't been able to
 retrain myself to do that just get.
+
+ToDo
+----
+
+I've completed the exercises for the first seven chapters, but have yet to add
+them to this repository.  I'm going through them one-by-one to sanitize them,
+and make sure I'm not ripping-off Paul Graham's code verbatim.  There were no
+exercieses for Chapter 1, so naturally I've included no solutions for it.  And
+for Chapter 2, I only have the solutions for one exercise so far, because the
+rest didn't entail writing code; but I may go back and include the answers to
+the rest anyway, for completeness' sake.
