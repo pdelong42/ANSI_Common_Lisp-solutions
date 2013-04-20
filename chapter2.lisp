@@ -1,5 +1,7 @@
 #!/usr/bin/clisp
 
+; 2.8a
+
 (defun rdots (x)
    (if
       (> x 0)
@@ -23,6 +25,8 @@
 (setf foo '(a b c d e a b c a))
 
 ;(format t "~A" foo)
+
+; 2.8b
 
 (defun rcount (x y)
    (if
