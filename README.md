@@ -23,9 +23,9 @@ ToDo
 ----
 
 I've completed the exercises for the first seven chapters, but have yet to add
-them to this repository.  I'm going through them one-by-one to sanitize them,
-and make sure I'm not ripping-off Paul Graham's code verbatim.  There were no
-exercieses for Chapter 1, so naturally I've included no solutions for it.  And
-for Chapter 2, I only have the solutions for one exercise so far, because the
-rest didn't entail writing code; but I may go back and include the answers to
-the rest anyway, for completeness' sake.
+anything past Chapter 2 to this repository.  I'm going through them one-by-one
+to sanitize them, and make sure I'm not ripping-off Paul Graham's code
+verbatim.  There were no exercises for Chapter 1, so naturally I've included no
+solutions for it.  And for Chapter 2, I only have the solutions for one
+exercise so far, because the rest didn't entail writing code; but I may go back
+and include the answers to the rest anyway, for completeness' sake.
