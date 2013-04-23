@@ -86,6 +86,6 @@
 
 (PrintExercise
    "Exercise 2.8b - iterative"
-   '(rcount '(a b c d e a b c a) 'a)
+   '(icount '(a b c d e a b c a) 'a)
    3
 )
