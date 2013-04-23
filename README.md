@@ -1,5 +1,5 @@
-ANSI_Common_Lisp-solutions
-==========================
+"ANSI Common Lisp" solutions
+============================
 
 Solutions to the end-chapter exercises in Paul Graham's "ANSI Common Lisp".
 
