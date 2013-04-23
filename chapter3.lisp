@@ -77,3 +77,29 @@
 ; 3.4
 
 (PrintExercise "Exercise 3.4")
+
+; 3.5
+
+(defun pos+
+   (x)
+   (posn+ x 0)
+)
+
+(defun posn+
+   (x n)
+   (if x
+      (cons
+         (+ (car x) n)
+         (posn+
+            (cdr x)
+            (+ n 1)
+         )
+      ) 
+   )  
+)  
+
+(PrintExercise
+   "Exercise 3.5 (not my solution)"
+   '(pos+ '(7 5 1 4))
+   '(7 6 3 7)
+)
