@@ -78,28 +78,67 @@
 
 (PrintExercise "Exercise 3.4")
 
-; 3.5
+; 3.5a
 
-(defun pos+
+; this first solution is based on one I found while looking on the Internet for
+; a solution, to see how well I solved the exercise - I thought this one was
+; more elegant than mine, so I adapted it to my style;
+
+(defun rpos++
    (x)
-   (posn+ x 0)
+   (rposn++ x 0)
 )
 
-(defun posn+
+(defun rposn++
    (x n)
-   (if x
-      (cons
-         (+ (car x) n)
-         (posn+
-            (cdr x)
-            (+ n 1)
-         )
-      ) 
+   (if
+      (null x)
+      (return-from rposn++)
+   )
+   (cons
+      (+ (car x) n)
+      (rposn++
+         (cdr x)
+         (+ n 1)
+      )
    )  
 )  
 
 (PrintExercise
-   "Exercise 3.5 (not my solution)"
-   '(pos+ '(7 5 1 4))
+   "Exercise 3.5a (not my solution)"
+   '(rpos++ '(7 5 1 4))
+   '(7 6 3 7)
+)
+
+(defun rpos+
+   (x)
+   (let
+      (  (n (length x)))
+      (rposn+ x n n)
+   )
+)
+
+(defun rposn+
+   (x n m)
+   (if
+      (null x)
+      (return-from rposn+)
+   )
+   (cons
+      (+
+         (car x)
+         (- m n)
+      )
+      (rposn+
+         (cdr x)
+         (- n 1)
+         m
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 3.5a (my solution)"
+   '(rpos+ '(7 5 1 4))
    '(7 6 3 7)
 )
