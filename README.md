@@ -23,9 +23,14 @@ ToDo
 ----
 
 I've completed the exercises for the first seven chapters, but have yet to add
-anything past Chapter 2 to this repository.  I'm going through them one-by-one
+anything past Chapter 3 to this repository.  I'm going through them one-by-one
 to sanitize them, and make sure I'm not ripping-off Paul Graham's code
 verbatim.  There were no exercises for Chapter 1, so naturally I've included no
 solutions for it.  And for Chapter 2, I only have the solutions for one
 exercise so far, because the rest didn't entail writing code; but I may go back
 and include the answers to the rest anyway, for completeness' sake.
+
+As part of the cleanup, I'm adding code to make the presentation a little
+neater, so that someone who runs the example files doesn't get a mess of output
+with no context whatsoever.  It may evolve into a unit testing framework down
+the road a bit.  We'll see.
