@@ -1,46 +1,79 @@
 #!/usr/bin/clisp
 
+(defun PrintExercise
+   (heading &optional code output prints?)
+   (format t "~A:~%" heading)
+   (unless code (return-from PrintExercise (format t "TBD~%~%")))
+   (format t "~A~%" code)
+   (format t "actual:   ")
+   (if prints?
+      (eval code)
+      (format t "~A" (eval code))
+   )
+   (terpri)
+   (if output (format t "expected: ~A~%" output))
+   (terpri)
+)
+
 ; 2.8a
 
-(defun rdots (x)
+(defun rdots
+   (x)
    (if
       (> x 0)
-      (or (format t ".") (rdots (- x 1)))
-      (format t "~%")
+      (or
+         (format t ".")
+         (rdots (- x 1))
+      )
    )
 )
 
-(defun idots (x)
+(PrintExercise
+   "Exercise 2.8a - recursive"
+   '(rdots 5)
+   "....."
+   t
+)
+
+(defun idots
+   (x)
    (do
       ((i 1 (+ i 1)))
       ((> i x) 'done)
       (format t ".")
    )
-   (format t "~%")
 )
 
-(rdots 5)
-(idots 5)
-
-(setf foo '(a b c d e a b c a))
-
-;(format t "~A" foo)
+(PrintExercise
+   "Exercise 2.8a - iterative"
+   '(idots 5)
+   "....."
+   t
+)
 
 ; 2.8b
 
-(defun rcount (x y)
-   (if
-      (not x)
-      (return-from rcount 0)
-   )
+(setf foo '(a b c d e a b c a))
+
+(defun rcount
+   (x y)
+   (unless x (return-from rcount 0))
    (+
       (if (eql y (car x)) 1 0)
       (rcount (cdr x) y)
    )
 )
 
-(defun icount (x y)
-   (let ((n 0))
+(PrintExercise
+   "Exercise 2.8b - recursive"
+   '(rcount foo 'a)
+   3
+)
+
+(defun icount
+   (x y)
+   (let
+      (  (n 0))
       (do
          ((z x (cdr z)))
          ((null z) 'done)
@@ -53,5 +86,8 @@
    )
 )
 
-(format t "~A~%" (rcount foo 'a))
-(format t "~A~%" (icount foo 'a))
+(PrintExercise
+   "Exercise 2.8b - iterative"
+   '(icount foo 'a)
+   3
+)
