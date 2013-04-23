@@ -53,8 +53,6 @@
 
 ; 2.8b
 
-(setf foo '(a b c d e a b c a))
-
 (defun rcount
    (x y)
    (unless x (return-from rcount 0))
@@ -66,7 +64,7 @@
 
 (PrintExercise
    "Exercise 2.8b - recursive"
-   '(rcount foo 'a)
+   '(rcount '(a b c d e a b c a) 'a)
    3
 )
 
@@ -88,6 +86,6 @@
 
 (PrintExercise
    "Exercise 2.8b - iterative"
-   '(icount foo 'a)
+   '(rcount '(a b c d e a b c a) 'a)
    3
 )
