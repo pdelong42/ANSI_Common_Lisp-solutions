@@ -19,7 +19,7 @@
 
 ; 3.1
 
-(PrintExercise "Exercise 3.1")
+(PrintExercise "Exercise 3.1 - see accompanying diagram (ToDo)")
 
 ; 3.2
 
@@ -120,10 +120,7 @@
 
 (defun rposn+
    (x n m)
-   (if
-      (null x)
-      (return-from rposn+)
-   )
+   (unless x (return-from rposn+))
    (cons
       (+
          (car x)
@@ -193,10 +190,7 @@
 
 (defun rmpos+
    (x)
-   (if  
-      (null x)
-      (return-from rmpos+)
-   )
+   (unless x (return-from rmpos+))
    (cons
       (car x)
       (mapcar
@@ -222,12 +216,63 @@
    (cons y x)
 )
 
-; ToDo: think of a better way to test this, with actual output
-
 (PrintExercise
    "Exercise 3.6a"
-   '(function gov_cons)
+   '(gov_cons 'a 'b)
+   '(b . a)
 )
 
 ; 3.6b
 
+; note that this is defined the same way "list" would be, with the exception of
+; the usage of "gov_cons"; it would probably be more appopriate to swap the
+; "head" and "tail" names, considering the intent of the exercise;
+
+(defun gov_list
+   (&rest args)
+   (let
+      (  (head (car args))
+         (tail (cdr args))
+      )
+      (unless tail (return-from gov_list (gov_cons head nil)))
+      (gov_cons head (apply (function gov_list) tail))
+   )
+)
+
+(PrintExercise
+   "Exercise 3.6b"
+   '(gov_list 'a 'b 'c)
+   '(((nil . c) . b) . a)
+)
+
+; 3.6c
+
+(defun gov_length
+   (x)
+   (unless x (return-from gov_length 0))
+   (+ 1 (gov_length (car x)))
+)
+
+(PrintExercise
+   "Exercise 3.6c"
+   '(gov_length (gov_list 'a 'b 'c))
+   3
+)
+
+; 3.6d
+
+(defun gov_member
+   (x y)
+   (unless y (return-from gov_member))
+   (if
+      (eql x (cdr y))
+      y
+      (gov_member x (car y))
+   )
+)
+
+(PrintExercise
+   "Exercise 3.6d"
+   '(gov_member 'b (gov_list 'a 'b 'c))
+   (gov_list 'b 'c)
+)
