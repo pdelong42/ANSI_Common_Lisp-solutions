@@ -142,3 +142,92 @@
    '(rpos+ '(7 5 1 4))
    '(7 6 3 7)
 )
+
+; 3.5b
+
+(defun ipos+
+   (x)
+   (let 
+      (  (n 0)
+         (y nil)
+      )
+      (dolist
+         (w x)
+         (push (+ w n) y)
+         (setf n (+ n 1))
+      )
+      (reverse y)
+   )
+)
+
+(PrintExercise
+   "Exercise 3.5b"
+   '(ipos+ '(7 5 1 4))
+   '(7 6 3 7)
+)
+
+; 3.5c
+
+(defun mpos+
+   (x)
+   (let
+      (  (n -1))
+      (mapcar
+         (lambda
+            (y)
+            (setf n (+ n 1))
+            (+ y n)
+         )
+         x
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 3.5c"
+   '(mpos+ '(7 5 1 4))
+   '(7 6 3 7)
+)
+
+; 3.5 "extra credit" - by recursion + mapcar
+
+(defun rmpos+
+   (x)
+   (if  
+      (null x)
+      (return-from rmpos+)
+   )
+   (cons
+      (car x)
+      (mapcar
+         (lambda
+            (y)
+            (+ y 1)
+         )
+         (rmpos+ (cdr x))
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 3.5 \"extra credit\""
+   '(rmpos+ '(7 5 1 4))
+   '(7 6 3 7)
+)
+
+; 3.6a
+
+(defun gov_cons
+   (x y)
+   (cons y x)
+)
+
+; ToDo: think of a better way to test this, with actual output
+
+(PrintExercise
+   "Exercise 3.6a"
+   '(function gov_cons)
+)
+
+; 3.6b
+
