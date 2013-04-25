@@ -2,6 +2,50 @@
 
 (load "util.lisp")
 
+; 2.1a
+
+; The sub-expressions, (- 5 1) and (+ 3 7), are each evaluated first (their
+; results probably pushed onto a stack as each is evaluated in-turn), and then
+; the larger expression is evaluated (probably by popping the previous results
+; off of the aforementioned stack).
+
+(PrintExercise
+   "Exercise 2.1a"
+   '(+ (- 5 1) (+ 3 7))
+   14
+)
+
+; 2.1b
+
+; The sub-expression, (+ 2 3), is evauated first, and its result is passed as
+; an argument to the outer expression, which creates a list containing it.
+
+(PrintExercise
+   "Exercise 2.1b"
+   '(list 1 (+ 2 3))
+   '(1 5)
+)
+
+; 2.1c
+
+; (write description)
+
+(PrintExercise
+   "Exercise 2.1c"
+   '(if (listp 1) (+ 1 2) (+ 3 4))
+   7
+)
+
+; 2.1d
+
+; (write description)
+
+(PrintExercise
+   "Exercise 2.1d"
+   '(list (and (listp 3) t) (+ 1 2))
+   '(nil 3)
+)
+
 ; 2.8a
 
 (defun rdots
