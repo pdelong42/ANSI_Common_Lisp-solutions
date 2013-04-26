@@ -46,17 +46,141 @@
    '(nil 3)
 )
 
+; 2.2
+
+(PrintExercise
+   "Exercise 2.2"
+   '(cons 'a (cons 'b (cons 'c nil)))
+   '(a b c)
+)
+
+(PrintExercise
+   "Exercise 2.2"
+   '(cons 'a (cons 'b '(c)))
+   '(a b c)
+)
+
+(PrintExercise
+   "Exercise 2.2"
+   '(cons 'a '(b c))
+   '(a b c)
+)
+
+; 2.3
+
+(defun yonban-me
+   (x)
+   (car (cdr (cdr (cdr x))))
+)
+
+(PrintExercise
+   "Exercise 2.3"
+   '(yonban-me '(1st 2nd 3rd 4th 5th 6th))
+   '4th
+)
+
+; 2.4
+
+(defun greater
+   (x y)
+   (if (> x y) x y)
+)
+
+(PrintExercise
+   "Exercise 2.4"
+   '(greater 100 -100)
+   100
+)
+
+; 2.5a
+
+; The following function expects a list as its input, and returns true if it
+; contains any null entries, false if there are none.
+
+(defun enigma
+   (x)
+   (unless x (return-from enigma))
+   (unless
+      (car x)
+      (return-from enigma t)
+   )
+   (enigma (cdr x))
+)
+
+(PrintExercise
+   "Exercise 2.5a"
+   '(enigma '(a nil c))
+   't
+)
+
+; PrintExercise has an interesting bug I didn't catch earlier: you can't use
+; NIL as an expected output, since that's interpreted as the desire to not
+; print expected output.  This needs to be addressed sooner or later.
+
+; 2.5b
+
+; The following function expects an element and a list as its input, and
+; returns the position of the first occurence of the element within the list.
+
+(defun mystery
+   (x y)
+   (unless y (return-from mystery))
+   (if
+      (eql x (car y))
+      (return-from mystery 0)
+   )
+   (let
+      (  (z (mystery x (cdr y))))
+      (if z (+ z 1))
+   )
+)
+
+(PrintExercise
+   "Exercise 2.5b"
+   '(mystery 'c '(a b a c a b))
+   3
+)
+
+; 2.6a
+
+(PrintExercise
+   "Exercise 2.6a"
+   '(car (car (cdr '(a (b c) d))))
+   'b
+)
+
+; 2.6b
+
+(PrintExercise
+   "Exercise 2.6b"
+   '(or 13 (/ 1 0))
+   13
+)
+
+; 2.6c
+
+(PrintExercise
+   "Exercise 2.6c"
+   '(apply #'list 1 nil)
+   '(1)
+)
+
+; 2.7
+
+(PrintExercise
+   "Exercise 2.7"
+)
+
 ; 2.8a
 
 (defun rdots
    (x)
-   (if
+   (unless
       (> x 0)
-      (or
-         (format t ".")
-         (rdots (- x 1))
-      )
+      (return-from rdots)
    )
+   (format t ".")
+   (rdots (- x 1))
 )
 
 (PrintExercise
@@ -119,4 +243,16 @@
    "Exercise 2.8b - iterative"
    '(icount '(a b c d e a b c a) 'a)
    3
+)
+
+; 2.9a
+
+(PrintExercise
+   "Exercise 2.9a"
+)
+
+; 2.9b
+
+(PrintExercise
+   "Exercise 2.9b"
 )
