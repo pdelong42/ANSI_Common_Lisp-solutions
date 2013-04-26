@@ -4,9 +4,33 @@
 
 (load "util.lisp")
 
-; 3.1
+; See the accompanying image file(s) for the diagrames called-for by Exercise
+; 3.1 (ToDo).  The "cons" statements below are intended to aid in making those
+; diagrams.
 
-(PrintExercise "Exercise 3.1 - see accompanying diagram (ToDo)")
+(PrintExercise
+   "Exercise 3.1a"
+   '(cons 'a (cons 'b (cons (cons 'c (cons 'd nil)) nil)))
+   '(a b (c d))
+)
+
+(PrintExercise
+   "Exercise 3.1b"
+   '(cons 'a (cons (cons 'b (cons (cons 'c (cons (cons 'd nil) nil)) nil)) nil))
+   '(a (b (c (d))))
+)
+
+(PrintExercise
+   "Exercise 3.1c"
+   '(cons (cons (cons 'a (cons 'b nil)) (cons 'c nil)) (cons 'd nil))
+   '(((a b) c) d)
+)
+
+(PrintExercise
+   "Exercise 3.1d"
+   '(cons 'a (cons (cons 'b 'c) 'd))
+   '(a (b . c) . d)
+)
 
 ; 3.2
 
@@ -63,7 +87,13 @@
 
 ; 3.4
 
-(PrintExercise "Exercise 3.4")
+; This returns "nil" because "(a)" refers to two different lists - the lists
+; are distinct, even though they have the same elements and appear identical.
+
+(PrintExercise
+   "Exercise 3.4"
+   '(member '(a) '((a) (b)))
+)
 
 ; 3.5a
 
