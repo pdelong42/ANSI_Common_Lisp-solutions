@@ -28,7 +28,9 @@
 
 ; 2.1c
 
-; (write description)
+; Since "1" is not a list, by itself, the "else" clause of the "if-then-else"
+; construct is taken, and the numbers "3" and "4" are added and the result
+; "7" is returned.
 
 (PrintExercise
    "Exercise 2.1c"
@@ -38,7 +40,10 @@
 
 ; 2.1d
 
-; (write description)
+; Since "3" is not a list, by itself, the enclosing "and" evaluates as "nil"
+; (presumably to be pushed on the stack); next the numbers "1" and "2" are
+; added together for a result of "3"; the larger expression then creates a list
+; from this value and the previous one it pops off the stack.
 
 (PrintExercise
    "Exercise 2.1d"
