@@ -167,8 +167,20 @@
 
 ; 2.7
 
+(defun contains-list?
+   (lst)
+   (unless lst (return-from contains-list?))
+   (if
+      (listp (car lst))
+      (return-from contains-list? t)
+   )
+   (contains-list? (cdr lst))
+)
+
 (PrintExercise
    "Exercise 2.7"
+   '(contains-list? '(a (b c) d))
+   't
 )
 
 ; 2.8a
@@ -223,7 +235,7 @@
    3
 )
 
-(defun icount
+(defun icount ; I count the candles on the shelf...
    (x y)
    (let
       (  (n 0))
@@ -247,12 +259,42 @@
 
 ; 2.9a
 
+; The original function seemed to behave as though 'remove' has side-effects,
+; which it does not.
+
+(defun summit
+   (lst)
+   (apply
+      (function +)
+      (remove nil lst)
+   )
+)
+
 (PrintExercise
    "Exercise 2.9a"
+   '(summit '(1 nil 3 nil 5))
+   9
 )
 
 ; 2.9b
 
+; The original function definition had no recursion termination condition, no
+; base case.
+
+(defun summit
+   (lst)
+   (unless lst (return-from summit 0))
+   (+
+      (summit (cdr lst))
+      (let
+      (  (x (car lst)))
+         (if (null x) 0 x)
+      )
+   )
+)
+
 (PrintExercise
    "Exercise 2.9b"
+   '(summit '(2 nil 4 nil 6))
+   12
 )
