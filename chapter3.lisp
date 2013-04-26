@@ -22,7 +22,13 @@
 
 (PrintExercise
    "Exercise 3.1c"
-   '(cons (cons (cons 'a (cons 'b nil)) (cons 'c nil)) (cons 'd nil))
+   '(cons
+       (cons
+          (cons 'a (cons 'b nil))
+          (cons 'c nil)
+       )
+       (cons 'd nil)
+    )
    '(((a b) c) d)
 )
 
