@@ -1,5 +1,7 @@
 #!/usr/bin/clisp
 
+; I cheated here and used "let*" and "return-from" before they were introduced.
+
 (load "util.lisp")
 
 ; 2.1a
