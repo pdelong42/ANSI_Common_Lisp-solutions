@@ -343,7 +343,7 @@
    (elt n)
    (if
       (> n 1)
-      (list n elt)
+      (cons n elt)
       elt
    )
 )
@@ -358,7 +358,6 @@
       (if
          (consp elt)
          (append (apply (function list-of) elt) rest)
-            ;(funcall (function list-of) (car elt) (cdr elt))
          (cons elt rest)
       )
    )
@@ -375,13 +374,13 @@
 (PrintExercise
    "Exercise 3.7 - n-elts"
    '(n-elts 'x 5)
-   '(5 x)
+   '(5 . x)
 )
 
 (PrintExercise
    "Exercise 3.7 - compress"
    '(compress '(1 1 1 0 1 0 0 0 0 1))
-   '((3 1) 0 1 (4 0) 1)
+   '((3 . 1) 0 1 (4 . 0) 1)
 )
 
 (PrintExercise
