@@ -304,9 +304,6 @@
 
 ; 3.7
 
-; Modify the program in Figure 3.6 to use fewer cons cells. (Hint: Use dotted
-; lists.) [see function definitions for: compress, compr, n-elts]
-
 (defun compress
    (x)
    (unless
@@ -393,4 +390,41 @@
    "Exercise 3.7 - uncompress"
    '(uncompress '((3 1) 0 1 (4 0) 1))
    '(1 1 1 0 1 0 0 0 0 1)
+)
+
+; 3.8
+;
+; Define a function that takes a list and prints it in dot notation:
+
+(defun showdots
+   (x)
+   (unless x (return-from showdots))
+   (format nil "(~A . ~A)"
+      (car x)
+      (showdots (cdr x))
+   )
+)
+
+(PrintExercise
+   "Exercise 3.8 - my solution"
+   '(showdots '(a b c))
+   '"(A . (B . (C . NIL)))"
+)
+
+(defun showdots
+   (x)
+   (if
+      (atom x)
+      (return-from showdots (format nil "~A" x))
+   )
+   (format nil "(~A . ~A)"
+      (showdots (car x))
+      (showdots (cdr x))
+   )
+)
+
+(PrintExercise
+   "Exercise 3.8 - not my solution"
+   '(showdots '(a b c))
+   '"(A . (B . (C . NIL)))"
 )
