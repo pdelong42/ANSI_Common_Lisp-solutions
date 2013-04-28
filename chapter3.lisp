@@ -301,3 +301,97 @@
    '(gov_member 'b (gov_list 'a 'b 'c))
    (gov_list 'b 'c)
 )
+
+; 3.7
+
+; Modify the program in Figure 3.6 to use fewer cons cells. (Hint: Use dotted
+; lists.) [see function definitions for: compress, compr, n-elts]
+
+(defun compress
+   (x)
+   (unless
+      (consp x)
+      (return-from compress x)
+   )
+   (compr
+      (car x)
+      1
+      (cdr x)
+   )
+)
+
+(defun compr
+   (elt n lst)
+   (unless lst (return-from compr (list (n-elts elt n))))
+   (let
+      (  (next (car lst)))
+      (if
+         (eql next elt)
+         (compr elt
+            (+ n 1)
+            (cdr lst)
+         )
+         (cons
+            (n-elts elt n)
+            (compr next 1 (cdr lst))
+         )
+      )
+   )
+)
+
+(defun n-elts
+   (elt n)
+   (if
+      (> n 1)
+      (list n elt)
+      elt
+   )
+)
+
+(defun uncompress
+   (lst)
+   (unless lst (return-from uncompress))
+   (let
+      (  (elt (car lst))
+         (rest (uncompress (cdr lst)))
+      )
+      (if
+         (consp elt)
+         (append (apply (function list-of) elt) rest)
+            ;(funcall (function list-of) (car elt) (cdr elt))
+         (cons elt rest)
+      )
+   )
+)
+
+(defun list-of
+   (n elt)
+   (unless
+      (zerop n)
+      (cons elt (list-of (- n 1) elt))
+   )
+)
+
+(PrintExercise
+   "Exercise 3.7 - n-elts"
+   '(n-elts 'x 5)
+   '(5 x)
+)
+
+(PrintExercise
+   "Exercise 3.7 - compress"
+   '(compress '(1 1 1 0 1 0 0 0 0 1))
+   '((3 1) 0 1 (4 0) 1)
+)
+
+(PrintExercise
+   "Exercise 3.7 - list-of"
+   '(list-of 3 'ho)
+   '(ho ho ho)
+)
+
+(PrintExercise
+   "Exercise 3.7 - uncompress"
+   '(uncompress '((3 1) 0 1 (4 0) 1))
+   '(1 1 1 0 1 0 0 0 0 1)
+)
