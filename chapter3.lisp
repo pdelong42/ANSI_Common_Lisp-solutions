@@ -7,7 +7,7 @@
 ; 3.1
 
 ; See the accompanying image file(s) for the diagrames called-for by Exercise
-; 3.1 (ToDo).  The "cons" statements below are intended to aid in making those
+; 3.1; the "cons" statements below are intended to aid in making those
 ; diagrams.
 
 (PrintExercise
