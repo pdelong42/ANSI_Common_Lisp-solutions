@@ -439,6 +439,17 @@
    (bfs end (list (list start)) net)
 )
 
+(defun new-paths
+   (path node net)
+   (mapcar 
+      (lambda
+         (n)
+         (cons n path)
+      )
+      (cdr (assoc node net))
+   )
+)
+
 ; BFS = breadth-first search
 
 (defun bfs
@@ -456,13 +467,7 @@
          end
          (append
             (cdr queue)
-            (mapcar 
-               (lambda
-                  (n)
-                  (cons n path)
-               )
-               (cdr (assoc node net))
-            )
+            (new-paths path node net)
          )
          net
       )
@@ -491,13 +496,7 @@
       (dfs
          end
          (append
-            (mapcar 
-               (lambda
-                  (n)
-                  (cons n path)
-               )
-               (cdr (assoc node net))
-            )
+            (new-paths path node net)
             (cdr queue)
          )
          net
