@@ -428,3 +428,149 @@
    '(showdots '(a b c))
    '"(A . (B . (C . NIL)))"
 )
+
+; 3.9
+
+; Prior to the exercise solution, I've reproduced here for reference the code
+; (with modification) for finding the *shortest* path:
+
+(defun shortest-path
+   (start end net)
+   (bfs end (list (list start)) net)
+)
+
+; BFS = breadth-first search
+
+(defun bfs
+   (end queue net)
+   (unless queue (return-from bfs))
+   (let*
+      (  (path (car queue))
+         (node (car path))
+      )
+      (if
+         (eql node end)
+         (return-from bfs (reverse path))
+      )
+      (bfs
+         end
+         (append
+            (cdr queue)
+            (mapcar 
+               (lambda
+                  (n)
+                  (cons n path)
+               )
+               (cdr (assoc node net))
+            )
+         )
+         net
+      )
+   )
+)
+
+(defun longest-path
+   (start end net)
+   (dfs end (list (list start)) net)
+)
+
+; DFS = depth-first search
+
+(defun dfs
+   (end queue net)
+   (unless queue (return-from dfs))
+   (let*
+      (
+         (path (car queue))
+         (node (car path))
+      )
+      (if
+         (eql node end)
+         (return-from dfs (reverse path))
+      )
+      (dfs
+         end
+         (append
+            (mapcar 
+               (lambda
+                  (n)
+                  (cons n path)
+               )
+               (cdr (assoc node net))
+            )
+            (cdr queue)
+         )
+         net
+      )
+   )
+)
+
+(PrintExercise
+   "shortest path (chapter example)"
+   '(shortest-path 'a 'd '((a b c) (b c) (c d)))
+   '(a c d)
+)
+
+(PrintExercise
+   "Exercise 3.9 - longest path"
+   '(longest-path 'a 'd '((a b c) (b c) (c d)))
+   '(a b c d)
+)
+
+; another suggested solution
+; rewrite it to your own style and understand it
+
+(defun longest-path
+   (start end net)
+   (if
+      (eql start end)
+      (return-from longest-path (list start))
+   )
+   (funcall
+      (lambda
+         (temp)
+         (if temp (cons start temp))
+      )
+      (funcall
+         (lambda
+            (lst)
+            (let
+               (  (longest-so-far nil))
+               (dolist (obj lst)
+                  (if
+                     (>
+                        (length obj)
+                        (length longest-so-far)
+                     )
+                     (setf longest-so-far obj)
+                  )
+               )
+               longest-so-far
+            )
+         )
+         (let
+            (  (temp (assoc start net)))
+            (mapcar
+               (lambda
+                  (node)
+                  (longest-path
+                     node
+                     end
+                     (mapcar
+                        (lambda
+                           (entry)
+                           (cons
+                              (car entry)
+                              (remove start (cdr entry))
+                           )
+                        )
+                        (remove temp net)
+                     )
+                  )
+               )
+               (cdr temp)
+            )
+         )
+      )
+   )
+)
