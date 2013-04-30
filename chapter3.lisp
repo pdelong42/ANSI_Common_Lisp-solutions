@@ -516,9 +516,6 @@
    '(a b c d)
 )
 
-; another suggested solution
-; rewrite it to your own style and understand it
-
 (defun longest-path
    (start end net)
    (if
@@ -534,8 +531,9 @@
          (lambda
             (lst)
             (let
-               (  (longest-so-far nil))
-               (dolist (obj lst)
+               (  (longest-so-far))
+               (dolist
+                  (obj lst)
                   (if
                      (>
                         (length obj)
@@ -572,4 +570,12 @@
          )
       )
    )
+)
+
+; ToDo: rewrite this to your own style and understand it
+
+(PrintExercise
+   "Exercise 3.9 - longest path, a different solution from someone else on the 'net"
+   '(longest-path 'a 'd '((a b c) (b c) (c d)))
+   '(a b c d)
 )
