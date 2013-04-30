@@ -516,66 +516,68 @@
    '(a b c d)
 )
 
+; The following alternate version of "longest-path" was found somewhere on the
+; Internet.  I've modified it somewhat, but I need to continue modifying it so
+; that it isn't completely unreadable.
+
 (defun longest-path
    (start end net)
    (if
       (eql start end)
       (return-from longest-path (list start))
    )
-   (funcall
-      (lambda
-         (temp)
-         (if temp (cons start temp))
-      )
-      (funcall
-         (lambda
-            (lst)
-            (let
-               (  (longest-so-far))
-               (dolist
-                  (obj lst)
-                  (if
-                     (>
-                        (length obj)
-                        (length longest-so-far)
-                     )
-                     (setf longest-so-far obj)
-                  )
+   (let
+      (  (neigh (assoc start net)))
+      (labels
+         (  (func1
+               (entry)
+               (cons
+                  (car entry)
+                  (remove start (cdr entry))
                )
-               longest-so-far
+            )
+            (func2
+               (temp)
+               (if temp (cons start temp))
+            )
+            (func3
+               (lst)
+               (let
+                  (  (longest-so-far))
+                  (dolist
+                     (obj lst)
+                     (if
+                        (>
+                           (length obj)
+                           (length longest-so-far)
+                        )
+                        (setf longest-so-far obj)
+                     )
+                  )
+                  longest-so-far
+               )
+            )
+            (func4
+               (node)
+               (longest-path node end (mapcar #'func1 (remove neigh net)))
             )
          )
-         (let
-            (  (temp (assoc start net)))
-            (mapcar
-               (lambda
-                  (node)
-                  (longest-path
-                     node
-                     end
-                     (mapcar
-                        (lambda
-                           (entry)
-                           (cons
-                              (car entry)
-                              (remove start (cdr entry))
-                           )
-                        )
-                        (remove temp net)
-                     )
-                  )
+         (funcall
+            (function func2)
+            (funcall
+               (function func3)
+               (mapcar
+                  (function func4)
+                  (cdr neigh)
                )
-               (cdr temp)
             )
          )
       )
    )
 )
 
-; ToDo: rewrite this to your own style and understand it
-
 (PrintExercise
-   "Exercise 3.9 - longest path, a different solution from someone else on the 'net"
+   "Exercise 3.9 - longest path, alternate version"
    '(longest-path 'a 'd '((a b c) (b c) (c d)))
    '(a b c d)
 )
