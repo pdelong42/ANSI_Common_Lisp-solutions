@@ -559,7 +559,14 @@
             )
             (func4
                (node)
-               (longest-path node end (mapcar #'func1 (remove neigh net)))
+               (longest-path
+                  node
+                  end
+                  (mapcar
+                     (function func1)
+                     (remove neigh net)
+                  )
+               )
             )
          )
          (funcall
