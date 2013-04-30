@@ -1,0 +1,16 @@
+total 144
+drwxr-sr-x  3 pd2375 user  4096 May 25 23:43 .
+drwxr-sr-x 18 pd2375 user  4096 May  9 10:57 ..
+-rw-r--r--  1 pd2375 user 46631 May 20  2011 acl2.lisp
+-rwxr-xr-x  1 pd2375 user   735 May 20  2011 chapter2.lisp
+-rwxr-xr-x  1 pd2375 user  9339 Jul 20  2011 chapter3.lisp
+-rwxr-xr-x  1 pd2375 user 15770 May 11 16:56 chapter4.lisp
+-rwxr-xr-x  1 pd2375 user 13883 May  5 22:31 chapter5.lisp
+-rwxr-xr-x  1 pd2375 user 13125 May 23 22:46 chapter6.lisp
+-rw-r--r--  1 pd2375 user  6645 May 25 23:32 chapter7.lisp
+-rw-r--r--  1 pd2375 user  1474 May  4 17:01 chapter8.lisp
+-rw-r--r--  1 pd2375 user     0 May 25 23:43 input-7.1.txt
+-rw-r--r--  1 pd2375 user    10 Apr 25 01:22 input.txt
+-rw-r--r--  1 pd2375 user    11 May  5 21:39 output.txt
+-rw-r--r--  1 pd2375 user   718 May 20  2011 PlanForSpam.txt
+drwxr-sr-x  2 pd2375 user  4096 May  5 12:29 RCS

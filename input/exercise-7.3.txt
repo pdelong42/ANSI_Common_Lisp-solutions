@@ -1,0 +1,5 @@
+foo() % dummy function
+% example of a full-line comment
+bar()
+
+fubar() %another dummy function
