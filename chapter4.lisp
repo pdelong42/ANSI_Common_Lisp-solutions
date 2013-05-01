@@ -103,3 +103,51 @@
    '(quarter-turn-square #2a((a b c) (d e f) (g h i)))
    #2a((g d a) (h e b) (i f c))
 )
+
+; 4.2
+
+; NOTE: What is not made clear, in the definition of "reduce" from the book,
+; is that there is an implied elipsis in each of the "equivalent to"
+; expressions.  That is, the expressions are not fixed at three variables, like
+; the examples seem to imply, but can be expanded to an indefinite number of
+; variables (e.g., 'd', 'e', 'f', etc.)
+
+(setf my-sequence '(u v w x y z))
+
+(defun my-copy-list
+   (x)
+   (reduce (function cons) x :from-end t :initial-value nil)
+)
+
+(PrintExercise
+   "Exercise 4.2a"
+   '(my-copy-list '(u v w x y z))
+   '(u v w x y z)
+)
+
+(PrintExercise
+   "Exercise 4.2a (extra assurance)"
+   '(let
+      (  (tmp '(u v w x y z)))
+      (eql tmp (my-copy-list tmp))
+   )
+   "NIL"
+)
+
+(defun my-reverse
+   (x)
+   (reduce
+      (lambda
+         (u v)
+         (cons v u)
+      )
+      x
+      :initial-value nil
+   )
+)
+
+(PrintExercise
+   "Exercise 4.2b"
+   '(my-reverse '(u v w x y z))
+   '(z y x w v u)
+)
