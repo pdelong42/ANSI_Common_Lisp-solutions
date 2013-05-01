@@ -542,31 +542,24 @@
             )
             (func3
                (lst)
+               (unless lst (return-from func3))
                (let
-                  (  (longest-so-far))
-                  (dolist
-                     (obj lst)
-                     (if
-                        (>
-                           (length obj)
-                           (length longest-so-far)
-                        )
-                        (setf longest-so-far obj)
-                     )
+                  (  (obj (car lst))
+                     (lsf (func3 (cdr lst)))
                   )
-                  longest-so-far
+                  (if
+                     (>
+                        (length obj)
+                        (length lsf)
+                     )
+                     obj
+                     lsf
+                  )
                )
             )
             (func4
                (node)
-               (longest-path
-                  node
-                  end
-                  (mapcar
-                     (function func1)
-                     (remove neigh net)
-                  )
-               )
+               (longest-path node end (mapcar #'func1 (remove neigh net)))
             )
          )
          (funcall
