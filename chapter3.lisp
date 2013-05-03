@@ -101,6 +101,7 @@
 (PrintExercise
    "Exercise 3.4"
    '(member '(a) '((a) (b)))
+   "NIL"
 )
 
 ; 3.5a
@@ -408,7 +409,7 @@
 (PrintExercise
    "Exercise 3.8 - my solution"
    '(showdots '(a b c))
-   '"(A . (B . (C . NIL)))"
+   "(A . (B . (C . NIL)))"
 )
 
 (defun showdots
@@ -426,7 +427,7 @@
 (PrintExercise
    "Exercise 3.8 - not my solution"
    '(showdots '(a b c))
-   '"(A . (B . (C . NIL)))"
+   "(A . (B . (C . NIL)))"
 )
 
 ; 3.9

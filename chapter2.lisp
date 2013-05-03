@@ -117,7 +117,7 @@
 (PrintExercise
    "Exercise 2.5a"
    '(enigma '(a nil c))
-   't
+   t
 )
 
 ; PrintExercise has an interesting bug I didn't catch earlier: you can't use
@@ -187,7 +187,7 @@
 (PrintExercise
    "Exercise 2.7"
    '(contains-list? '(a (b c) d))
-   't
+   t
 )
 
 ; 2.8a
