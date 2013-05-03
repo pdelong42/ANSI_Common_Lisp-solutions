@@ -112,26 +112,9 @@
 ; the examples seem to imply, but can be expanded to an indefinite number of
 ; variables (e.g., 'd', 'e', 'f', etc.)
 
-(setf my-sequence '(u v w x y z))
-
 (defun my-copy-list
    (x)
    (reduce (function cons) x :from-end t :initial-value nil)
-)
-
-(PrintExercise
-   "Exercise 4.2a"
-   '(my-copy-list '(u v w x y z))
-   '(u v w x y z)
-)
-
-(PrintExercise
-   "Exercise 4.2a (extra assurance)"
-   '(let
-      (  (tmp '(u v w x y z)))
-      (eql tmp (my-copy-list tmp))
-   )
-   "NIL"
 )
 
 (defun my-reverse
@@ -147,7 +130,114 @@
 )
 
 (PrintExercise
+   "Exercise 4.2a - preliminary"
+   '(setf list-test '(u v w x y z))
+)
+
+(PrintExercise
+   "Exercise 4.2a"
+   '(my-copy-list list-test)
+   (copy-list list-test)
+)
+
+(PrintExercise
+   "Exercise 4.2a - extra assurance"
+   '(eql list-test (my-copy-list list-test))
+   "NIL"
+)
+
+(PrintExercise
    "Exercise 4.2b"
-   '(my-reverse '(u v w x y z))
-   '(z y x w v u)
+   '(my-reverse list-test)
+   (reverse list-test)
+)
+
+; 4.3
+
+(defun print-trinode
+   (n s d)
+   (format s "(elt: ~A l: ~A m: ~A r: ~A)"
+      (trinode-elt n)
+      (trinode-l   n)
+      (trinode-m   n)
+      (trinode-r   n)
+   )
+)
+
+(defstruct (trinode (:print-function print-trinode)) elt l m r)
+
+(defun tst-copy
+   (tst)
+   (unless tst (return-from tst-copy))
+   (make-trinode
+      :elt           (trinode-elt tst)
+      :l   (tst-copy (trinode-l   tst))
+      :m   (tst-copy (trinode-m   tst))
+      :r   (tst-copy (trinode-r   tst))
+   )
+)
+
+(defun tst-find
+   (obj tst)
+   (unless tst (return-from tst-find))
+   (or
+      (eql      obj (trinode-elt tst))
+      (tst-find obj (trinode-l   tst))
+      (tst-find obj (trinode-m   tst))
+      (tst-find obj (trinode-r   tst))
+   )
+)
+
+(PrintExercise
+   "Exercise 4.3a - preliminary"
+   '(setf trinode-test
+      (make-trinode
+                          :elt 'ABC
+         :l (make-trinode :elt 'DEF)
+         :m (make-trinode :elt 'GHI)
+         :r (make-trinode :elt 'JKL)
+      )
+   )
+   "N/A"
+)
+
+(PrintExercise
+   "Exercise 4.3a"
+   '(tst-copy trinode-test)
+   trinode-test
+)
+
+(PrintExercise
+   "Exercise 4.3a - sanity check"
+   '(eql trinode-test trinode-test)
+   t
+)
+
+(PrintExercise
+   "Exercise 4.3a - extra assurance"
+   '(eql trinode-test (tst-copy trinode-test))
+   "NIL"
+)
+
+(PrintExercise
+   "Exercise 4.3a - extra extra assurance"
+   '(eql
+      (trinode-r           trinode-test)
+      (trinode-r (tst-copy trinode-test))
+   )
+   "NIL"
+)
+
+(PrintExercise
+   "Exercise 4.3b"
+   '(tst-find
+      trinode-test
+      (make-trinode
+                          :elt 'MNO
+         :l (make-trinode :elt 'PQR)
+         :m (make-trinode :elt trinode-test)
+         :r (make-trinode :elt 'STU)
+      )
+   )
+   t
 )
