@@ -249,6 +249,18 @@
 )
 
 (PrintExercise
+   "Section 4.7 example: BST - test of bst-min"
+   '(bst-min nums)
+   "(elt: 1 l: NIL r: NIL)"
+)
+
+(PrintExercise
+   "Section 4.7 example: BST - test of bst-max"
+   '(bst-max nums)
+   "(elt: 9 l: NIL r: NIL)"
+)
+
+(PrintExercise
    "Section 4.7 example: BST - test of null bst-find"
    '(bst-find 12 nums (function <))
    "NIL"
@@ -256,35 +268,24 @@
 
 (PrintExercise
    "Section 4.7 example: BST - test of non-null bst-find"
-   '(bst-find 4 nums (function <))
-   "(elt: 4 l: (elt: 2 l: (elt: 1 l: NIL r: NIL) r: (elt: 3 l: NIL r: NIL)) r: NIL)"
+   '(bst-find 2 nums (function <))
+   "(elt: 2 l: (elt: 1 l: NIL r: NIL) r: (elt: 3 l: NIL r: NIL))"
 )
 
 (PrintExercise
-   "Section 4.7 example: BST - test of non-null bst-min"
-   '(bst-min nums)
-   "TBD"
+   "Section 4.7 example: BST - test of bst-remove and bst-find"
+   '(progn
+      (setf nums (bst-remove 2 nums (function <)))
+      (bst-find 2 nums (function <))
+   )
+   "NIL"
 )
 
 (PrintExercise
-   "Section 4.7 example: BST - test of non-null bst-max"
-   '(bst-max nums)
-   "TBD"
+   "Section 4.7 example: BST - test of bst-traverse (following bst-remove)"
+   '(bst-traverse (function princ) nums)
+   "13456789NIL"
 )
-
-;(format t "(setf nums (bst-remove 2 nums (function <)))~%")
-;(format t "expected: #<5>~%")
-;(format t "actual:   ~A~%~%" (setf nums (bst-remove 2 nums (function <))))
-
-;(format t "(bst-find 2 nums (function <))~%")
-;(format t "expected: NIL~%")
-;(format t "actual:   ~A~%~%" (bst-find 2 nums (function <)))
-
-;(format t "(bst-traverse (function princ) nums)~%")
-;(format t "expected: 13456789~%")
-;(format t "actual:   ")
-;(bst-traverse (function princ) nums)
-;(format t "~%")
 
 ; 4.1
 
