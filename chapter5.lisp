@@ -78,12 +78,6 @@
    )
 )
 
-(PrintExercise
-   "Exercise 5.2 - original version of \"mystery\""
-   '(mystery 4 '(1 2 3 4 5 4 3 2 1))
-   3
-)
-
 (defun my-mystery
    (x y)
    (cond
@@ -99,7 +93,7 @@
 )
 
 (PrintExercise
-   "Exercise 5.2 - rewrite to use \"cond\""
+   "Exercise 5.2"
    '(my-mystery 4 '(1 2 3 4 5 4 3 2 1))
-   3
+   (mystery 4 '(1 2 3 4 5 4 3 2 1))
 )
