@@ -97,3 +97,26 @@
    '(my-mystery 4 '(1 2 3 4 5 4 3 2 1))
    (mystery 4 '(1 2 3 4 5 4 3 2 1))
 )
+
+; 5.3
+
+(defun restricted-square
+   (x)
+   (if
+      (and
+         (typep x 'integer)
+         (or
+            (> x 5)
+            (<= x 0)
+         )
+      )
+      (* x x)
+      x
+   )
+)
+
+(PrintExercise
+   "Exercise 5.3"
+   '(mapcar #'restricted-square '(-5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9))
+   '(25 16 9 4 1 0 1 2 3 4 5 36 49 64 81)
+)
