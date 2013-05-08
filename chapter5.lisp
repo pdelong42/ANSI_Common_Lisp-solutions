@@ -62,3 +62,44 @@
       (+ w z)
    )
 )
+
+; 5.2
+
+(defun mystery
+   (x y)
+   (unless y (return-from mystery))
+   (if
+      (eql x (car y))
+      (return-from mystery 0)
+   )
+   (let
+      (  (z (mystery x (cdr y))))
+      (and z (+ z 1))
+   )
+)
+
+(PrintExercise
+   "Exercise 5.2 - original version of \"mystery\""
+   '(mystery 4 '(1 2 3 4 5 4 3 2 1))
+   3
+)
+
+(defun my-mystery
+   (x y)
+   (cond
+      (  (null y) nil)
+      ((eql x (car y)) 0)
+      (t
+         (let
+            (  (z (mystery x (cdr y))))
+            (and z (+ z 1))
+         )
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 5.2 - rewrite to use \"cond\""
+   '(my-mystery 4 '(1 2 3 4 5 4 3 2 1))
+   3
+)
