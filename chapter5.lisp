@@ -417,13 +417,6 @@
 )
 
 ; 5.6
-;
-; Define iterative and recursive versions of a function that takes an object
-; and a list, and returns a new list in which the object appears between each
-; pair of elements in the original list:
-;
-; > (intersperse '- '(a b c d))
-; (A - B - C - D)
 
 (defun intersperse-iterative
    (obj lst)
