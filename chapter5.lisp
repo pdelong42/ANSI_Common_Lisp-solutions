@@ -466,12 +466,11 @@
 
 (defun intersperse-recursive
    (obj lst)
-   (cons
-      (car lst)
-      (if
-         (cdr lst)
-         (cons obj (intersperse-recursive obj (cdr lst)))
+   (let
+      (  (x (car lst))
+         (y (cdr lst))
       )
+      (cons x (if y (cons obj (intersperse-recursive obj y))))
    )
 )
 
