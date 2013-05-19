@@ -385,14 +385,14 @@
    '(#\c #\d #\r)
 )
 
-(defun precedes-alternate
+(defun precedes-alternative
    (x v &optional prev chars)
    (unless
       (< 0 (length v))
-      (return-from precedes-alternate chars)
+      (return-from precedes-alternative chars)
    )
    (sort
-      (precedes-alternate
+      (precedes-alternative
          x
          (subseq v 1)
          (aref   v 0)
@@ -411,7 +411,72 @@
 )
 
 (PrintExercise
-   "Exercise 5.5 - alternate"
-   '(precedes-alternate #\a "abracadabra")
+   "Exercise 5.5 - alternative"
+   '(precedes-alternative #\a "abracadabra")
    '(#\c #\d #\r)
+)
+
+; 5.6
+;
+; Define iterative and recursive versions of a function that takes an object
+; and a list, and returns a new list in which the object appears between each
+; pair of elements in the original list:
+;
+; > (intersperse '- '(a b c d))
+; (A - B - C - D)
+
+(defun intersperse-iterative
+   (obj lst)
+   (let
+      (  (ret (cons (car lst) nil)))
+      (dolist
+         (cur (cdr lst))
+         (setf ret (cons cur (cons obj ret)))
+      )
+      (reverse ret)
+   )
+)
+
+(PrintExercise
+   "Exercise 5.6 - iterative"
+   '(intersperse-iterative '- '(a b c d))
+   '(a - b - c - d)
+)
+
+; someone else's solution (modified) which I like better
+
+(defun intersperse-alternative
+   (obj lst)
+   (let
+      (  (ret))
+      (dolist
+         (cur lst)
+         (push cur ret)
+         (push obj ret)
+      )
+      (reverse (cdr ret))
+   )
+)
+
+(PrintExercise
+   "Exercise 5.6 - alternative"
+   '(intersperse-alternative '- '(a b c d))
+   '(a - b - c - d)
+)
+
+(defun intersperse-recursive
+   (obj lst)
+   (cons
+      (car lst)
+      (if
+         (cdr lst)
+         (cons obj (intersperse-recursive obj (cdr lst)))
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 5.6 - recursive"
+   '(intersperse-recursive '- '(a b c d))
+   '(a - b - c - d)
 )
