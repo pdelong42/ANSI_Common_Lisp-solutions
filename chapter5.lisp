@@ -344,11 +344,9 @@
          (> i (- (length v) 2))
          (sort chars (function char<))
       )
-      (if
-         (and
-            (eql x (aref v (+ i 1)))
-            (not (member curr chars))
-         )
+      (and
+         (eql x (aref v (+ i 1)))
+         (not (member curr chars))
          (push curr chars)
       )
    )
@@ -372,14 +370,12 @@
          (rest (subseq v 1))
          (chars (precedes-recursive x rest))
       )
-      (if
-         (and
-            (eql x (aref v 1))
-            (not (member curr chars))
-         )
+      (and
+         (eql x (aref v 1))
+         (not (member curr chars))
          (push curr chars)
       )
-      (sort chars #'char<)
+      (sort chars (function char<))
    )
 )
 
