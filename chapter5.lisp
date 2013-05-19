@@ -2,7 +2,8 @@
 
 (load "util.lisp")
 
-; code from Figures 5.1 and 5.2
+; ToDo: make this definition of "month" workable as a replacement for the
+; existing one.
 
 ;(defconstant month
 ;   (reverse
@@ -18,9 +19,9 @@
 ;   )
 ;)
 
-(defconstant month
-   #(0 31 59 90 120 151 181 212 243 273 304 334 365)
-)
+; code from Figures 5.1 and 5.2
+
+(defconstant month #(0 31 59 90 120 151 181 212 243 273 304 334 365))
 
 (defconstant yzero 2000)
 
@@ -328,4 +329,93 @@
          (month-num (+ i 1) y)
       )
    )
+)
+
+; 5.5
+
+(defun precedes-iterative
+   (x v)
+   (do*
+      (  (chars)
+         (i 0 (+ i 1))
+         (curr nil (aref v i))
+      )
+      (
+         (> i (- (length v) 2))
+         (sort chars (function char<))
+      )
+      (if
+         (and
+            (eql x (aref v (+ i 1)))
+            (not (member curr chars))
+         )
+         (push curr chars)
+      )
+   )
+)
+
+(PrintExercise
+   "Exercise 5.5 - iterative"
+   '(precedes-iterative #\a "abracadabra")
+   '(#\c #\d #\r)
+)
+
+(defun precedes-recursive
+   (x v)
+   (unless
+      (< 1 (length v))
+      (return-from precedes-recursive)
+   )
+   (let*
+      (
+         (curr (aref   v 0))
+         (rest (subseq v 1))
+         (chars (precedes-recursive x rest))
+      )
+      (if
+         (and
+            (eql x (aref v 1))
+            (not (member curr chars))
+         )
+         (push curr chars)
+      )
+      (sort chars #'char<)
+   )
+)
+
+(PrintExercise
+   "Exercise 5.5 - recursive"
+   '(precedes-recursive #\a "abracadabra")
+   '(#\c #\d #\r)
+)
+
+(defun precedes-alternate
+   (x v &optional prev chars)
+   (unless
+      (< 0 (length v))
+      (return-from precedes-alternate chars)
+   )
+   (sort
+      (precedes-alternate
+         x
+         (subseq v 1)
+         (aref   v 0)
+         (if
+            (and
+               prev
+               (eql x (aref v 0))
+               (not (member prev chars))
+            )
+            (cons prev chars)
+            chars
+         )
+      )
+      (function char<)
+   )
+)
+
+(PrintExercise
+   "Exercise 5.5 - alternate"
+   '(precedes-alternate #\a "abracadabra")
+   '(#\c #\d #\r)
 )
