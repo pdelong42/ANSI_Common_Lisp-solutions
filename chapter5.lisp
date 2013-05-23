@@ -12,9 +12,7 @@
 ;            (x)
 ;            (apply (function +) x)
 ;         )
-;         (reverse
-;            '(0 31 28 31 30 31 30 31 31 30 31 30 31)
-;         )
+;         (reverse '(0 31 28 31 30 31 30 31 31 30 31 30 31))
 ;      )
 ;   )
 ;)
@@ -471,4 +469,124 @@
    "Exercise 5.6 - recursive"
    '(intersperse-recursive '- '(a b c d))
    '(a - b - c - d)
+)
+
+; 5.7
+;
+; Define a function that takes a list of numbers and returns true iff the
+; difference between each successive pair of them is 1, using...
+;
+; a) recursion
+;
+; b) "do"
+;
+; c) "mapc" and "return"
+;
+; Note from Paul: the solutions I found online did not assume that the absolute
+; value of the difference should be "1", like I did below.  But either way, the
+; logic is mostly identical (just drop the wrapping call to "abs").
+
+(defun unitdiff-recursive
+   (lst)
+   (let
+      (  (the1st  (car lst))
+         (therest (cdr lst))
+      )
+      (unless therest (return-from unitdiff-recursive t))
+      (unless
+         (unitdiff-recursive (cdr therest))
+         (return-from unitdiff-recursive)
+      )
+      (= 1 (abs (- the1st (car therest))))
+   )
+)
+
+(defun unitdiff-iterative
+   (lst)
+   (let
+      (  (obj (car lst)))
+      (dolist
+         (x (cdr lst))
+         (unless
+            (= 1 (abs (- obj x)))
+            (return-from unitdiff-iterative)
+         )
+         (setf obj x)
+      )
+      (return-from unitdiff-iterative t)
+   )
+)
+
+(defun unitdiff-mapreturn
+   (lst)
+   (let
+      (  (obj (car lst)))
+      (mapc
+         (lambda
+            (x)
+            (unless
+               (= 1 (abs (- obj x)))
+               (return-from unitdiff-mapreturn)
+            )
+            (setf obj x)
+         )
+         (cdr lst)
+      )
+      (return-from unitdiff-mapreturn t)
+   )
+)
+
+; this answer is from Ervin Dede
+
+(defun diff-is-always-one
+   (lst)
+   (listp
+      (mapc
+         (lambda
+            (x y)
+            (unless
+               (= 1 (abs (- y x)))
+               (return-from diff-is-always-one)
+            )
+         )
+         lst
+         (cdr lst)
+      )
+   )
+)
+
+; There's a better way to do this, I'm sure.  But until I work-out the details,
+; it's better to have something rather than nothing.
+
+(dolist
+   (f
+     '(  unitdiff-recursive
+         unitdiff-iterative
+         unitdiff-mapreturn
+         diff-is-always-one
+      )
+   )
+   (dolist
+      (x
+        '(  (t     )
+            (t     30)
+            (t     1 2 3 2 1)
+            ("NIL" 1 3 2 5 4)
+            (t     5000 5001 5000)
+            (t     29 28 27)
+            (t     -5 -6 -7 -6)
+            ("NIL" 50 3 666 98 5)
+         )
+      )
+      (let
+         (  (val (car x))
+            (lst (cdr x))
+         )
+         (PrintExercise
+            "Exercise 5.7"
+            `(,f ',lst)
+            val
+         )
+      )
+   )
 )
