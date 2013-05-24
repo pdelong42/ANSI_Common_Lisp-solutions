@@ -582,11 +582,7 @@
          (  (val (car x))
             (lst (cdr x))
          )
-         (PrintExercise
-            "Exercise 5.7"
-            `(,f ',lst)
-            val
-         )
+         (PrintExercise "Exercise 5.7" `(,f ',lst) val)
       )
    )
 )
