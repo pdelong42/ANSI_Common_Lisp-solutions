@@ -149,12 +149,10 @@
       (return-from num-month (nmon n))
    )
    (cond
-      (
-         (= n 59)
+      (  (= n 59)
          (values 2 29)
       )
-      (
-         (> n 59)
+      (  (> n 59)
          (nmon (- n 1))
       )
       (t (nmon n))
@@ -472,16 +470,7 @@
 )
 
 ; 5.7
-;
-; Define a function that takes a list of numbers and returns true iff the
-; difference between each successive pair of them is 1, using...
-;
-; a) recursion
-;
-; b) "do"
-;
-; c) "mapc" and "return"
-;
+
 ; Note from Paul: the solutions I found online did not assume that the absolute
 ; value of the difference should be "1", like I did below.  But either way, the
 ; logic is mostly identical (just drop the wrapping call to "abs").
@@ -585,4 +574,81 @@
          (PrintExercise "Exercise 5.7" `(,f ',lst) val)
       )
    )
+)
+
+; 5.8
+;
+; Define a single recursive function that returns, as two values, the maximum
+; and minimum elements of a vector.
+
+(defun min-and-max
+   (lst)
+   (unless lst (return-from min-and-max (values)))
+   (multiple-value-bind
+      (min max)
+      (min-and-max (cdr lst))
+      (let
+         (  (head (car lst)))
+         (values
+            (cond
+               (  (xor head min))
+               (  (and head min)
+                  (if (< head min) head min)
+               )
+            )
+            (cond
+               (  (xor head max))
+               (  (and head max)
+                  (if (> head max) head max)
+               )
+            )
+         )
+      )
+   )
+)
+
+; solution by Loz Hygate, with some modifications by me
+
+(defun max-min
+   (vec)
+   (let
+      (  (v (aref vec 0)))
+      (if
+         (eql 1 (length vec))
+         (return-from max-min (values v v))
+      )
+      (multiple-value-bind
+         (minv maxv)
+         (max-min (subseq vec 1))
+         (cond
+            ((< v minv) (values v maxv))
+            ((> v maxv) (values minv v))
+            (t (values minv maxv))
+         )
+      )
+   )
+)
+
+; try further modifications to converge these two versions
+
+; devise tests which will work for the first solution, but break the second one
+
+(PrintExercise
+   "Exercise 5.8"
+   '(multiple-value-bind
+      (min max)
+      (min-and-max '(5 3 1 0 -5 11 20 2 nil))
+      (list min max)
+   )
+   '(-5 20)
+)
+
+(PrintExercise
+   "Exercise 5.8 - alternate"
+   '(multiple-value-bind
+      (min max)
+      (max-min #(5 3 1 0 -5 11 20 2 nil))
+      (list min max)
+   )
+   '(-5 20)
 )
