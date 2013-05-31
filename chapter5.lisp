@@ -577,77 +577,41 @@
 )
 
 ; 5.8
-;
-; Define a single recursive function that returns, as two values, the maximum
-; and minimum elements of a vector.
 
 (defun min-and-max
-   (lst)
-   (unless lst (return-from min-and-max (values)))
-   (multiple-value-bind
-      (min max)
-      (min-and-max (cdr lst))
-      (let
-         (  (head (car lst)))
-         (values
-            (cond
-               (  (xor head min))
-               (  (and head min)
-                  (if (< head min) head min)
-               )
-            )
-            (cond
-               (  (xor head max))
-               (  (and head max)
-                  (if (> head max) head max)
-               )
-            )
-         )
-      )
-   )
-)
-
-; solution by Loz Hygate, with some modifications by me
-
-(defun max-min
    (vec)
+   (if
+      (eql 0 (length vec))
+      (return-from min-and-max)
+   )
    (let
-      (  (v (aref vec 0)))
-      (if
-         (eql 1 (length vec))
-         (return-from max-min (values v v))
-      )
+      (  (head (aref vec 0)))
       (multiple-value-bind
          (minv maxv)
-         (max-min (subseq vec 1))
-         (cond
-            ((< v minv) (values v maxv))
-            ((> v maxv) (values minv v))
-            (t (values minv maxv))
+         (min-and-max (subseq vec 1))
+         (values
+            (cond
+               (  (xor head minv))
+               (  (and head minv)
+                  (if (< head minv) head minv)
+               )
+            )
+            (cond
+               (  (xor head maxv))
+               (  (and head maxv)
+                  (if (> head maxv) head maxv)
+               )
+            )
          )
       )
    )
 )
-
-; try further modifications to converge these two versions
-
-; devise tests which will work for the first solution, but break the second one
 
 (PrintExercise
    "Exercise 5.8"
    '(multiple-value-bind
       (min max)
-      (min-and-max '(5 3 1 0 -5 11 20 2 nil))
-      (list min max)
-   )
-   '(-5 20)
-)
-
-(PrintExercise
-   "Exercise 5.8 - alternate"
-   '(multiple-value-bind
-      (min max)
-      (max-min #(5 3 1 0 -5 11 20 2 nil))
+      (min-and-max #(5 3 1 0 -5 11 20 2 nil))
       (list min max)
    )
    '(-5 20)
