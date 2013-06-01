@@ -616,3 +616,94 @@
    )
    '(-5 20)
 )
+
+; 5.9
+
+; The program in Figure 3.12 continues to search as the first complete path
+; works its way through the queue.  In broad searches this would be a problem.
+
+(defun bfs
+   (end queue net)
+   (unless queue (return-from bfs))
+   (let*
+      (  (path (car queue))
+         (node (car path))
+      )
+      (if
+         (eql node end)
+         (throw 'abort (reverse path))
+      )
+      (bfs
+         end
+         (append
+            (cdr queue)
+            (mapcar
+               (lambda
+                  (n)
+                  (cons n path)
+               )
+               (cdr (assoc node net))
+            )
+         )
+         net
+      )
+   )
+)  
+
+(defun shortest-path-catch
+   (start end net)
+   (catch 'abort (bfs end (list (list start)) net))
+)
+
+(PrintExercise
+   "Exercise 5.9a"
+   '(shortest-path-catch 'a 'd '((a b c) (b c) (c d)))
+   '(a c d)
+)
+
+(defun shortest-path-nocatch
+   (start finish net)
+   (labels
+      (  (bfs
+            (end queue)
+            (unless queue (return))
+            (let*
+               (
+                  (path (car queue))
+                  (node (car path))
+               )
+               (if
+                  (eql node end)
+                  (return-from shortest-path-nocatch (reverse path))
+               )
+               (bfs
+                  end
+                  (append
+                     (cdr queue)
+                     (mapcar
+                        (lambda
+                           (n)
+                           (cons n path)
+                        )
+                        (cdr (assoc node net))
+                     )
+                  )
+               )
+            )
+         )
+      )
+      (bfs finish (list (list start)))
+   )
+)
+
+(PrintExercise
+   "Exercise 5.9b"
+   '(shortest-path-nocatch 'a 'd '((a b c) (b c) (c d)))
+   '(a c d)
+)
+
+; I cheated - "labels" isn't taught until chapter 6
+
+; UPDATE: oh, I guess I wasn't cheating after all - my original version of
+; "bfs" fulfills the requirements of ex5.9b (I used a "return-from" statement
+; because I thought it improved the code.
