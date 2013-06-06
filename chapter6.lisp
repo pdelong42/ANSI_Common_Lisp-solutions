@@ -4,6 +4,14 @@
 
 ; 6.1
 
+(defun constituent
+   (c)
+   (and
+      (graphic-char-p c)
+      (not (char= c #\  ))
+   )
+)
+
 (defun tokens
    (  str
       &key
@@ -33,22 +41,14 @@
    )
 )
 
-(defun constituent
-   (c)
-   (and
-      (graphic-char-p c)
-      (not (char= c #\  ))
-   )
-)
-
 (PrintExercise
-   "Exercise 6.1 - split by alphabetic characters"
+   "Exercise 6.1 - try a non-default test function"
    '(tokens "ab12 3cde.f" :test (function alpha-char-p) :start 0)
    "(ab cde f)"
 )
 
 (PrintExercise
-   "Exercise 6.1 - test default explicitly"
+   "Exercise 6.1 - test defaults explicitly"
    '(tokens "ab12 3cde.f gh" :test (function constituent) :start 0)
    "(ab12 3cde.f gh)"
 )
