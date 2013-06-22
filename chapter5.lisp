@@ -73,10 +73,7 @@
       (if
          (>= y yzero)
          (dotimes
-            (i
-               (- y yzero)
-               d
-            )
+            (i (- y yzero) d)
             (incf d (year-days (+ yzero i)))
          )
          (dotimes
@@ -113,8 +110,7 @@
    (if
       (< n 0)
       (do*
-         (
-            (y
+         (  (y
                (- yzero 1)
                (- y 1)
             )
@@ -123,18 +119,15 @@
                (- d (year-days y))
             )
          )
-         (
-            (<= d n)
+         (  (<= d n)
             (values y (- n d))
          )
       )
       (do*
-         (
-            (y yzero (+ y 1))
+         (  (y yzero (+ y 1))
             (prev 0 d)
          )
-         (
-            (> d n)
+         (  (> d n)
             (values y (- n prev))
          )
       )
@@ -668,8 +661,7 @@
             (end queue)
             (unless queue (return))
             (let*
-               (
-                  (path (car queue))
+               (  (path (car queue))
                   (node (car path))
                )
                (if

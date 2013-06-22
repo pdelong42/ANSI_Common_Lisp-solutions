@@ -299,14 +299,12 @@
          (y (make-array (list n m)))
       )
       (do
-         (
-            (j 0 (+ j 1))
+         (  (j 0 (+ j 1))
             (l 0 (+ l 1))
          )
          (  (>= j n))
          (do
-            (
-               (i 0 (+ i 1))
+            (  (i 0 (+ i 1))
                (k (- m 1) (- k 1))
             )
             (  (>= i m))
@@ -362,11 +360,11 @@
          (y (make-array       d))
       )
       (do
-         ((i 0 (+ i 1)))
-         ((>= i n))
+         (  (i 0 (+ i 1)))
+         (  (>= i n))
          (do
-            ((j 0 (+ j 1)))
-            ((>= j n))
+            (  (j 0 (+ j 1)))
+            (  (>= j n))
             (setf
                (aref y i j)
                (aref x (- n j 1) i)
