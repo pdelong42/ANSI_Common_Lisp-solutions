@@ -23,7 +23,7 @@ ToDo
 ----
 
 I've completed the exercises for the first seven chapters, but have yet to add
-anything past Chapter 3 to this repository.  I'm going through them one-by-one
+anything past Chapter 6 to this repository.  I'm going through them one-by-one
 to sanitize them, and make sure I'm not ripping-off Paul Graham's code
 verbatim.  There were no exercises for Chapter 1, so naturally I've included no
 solutions for it.  And for Chapter 2, I only have the solutions for one
