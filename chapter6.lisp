@@ -77,10 +77,108 @@
    "(ab12 3cde.f gh)"
 )
 
-;(PrintExercise
-;   "Exercise 6."
-;)
+; 6.2
 
-; ToDo:
-; - rework the above test statements so that it is a do-loop like the one
-;   below.
+(defun bin-search
+   (  obj
+      vec
+      &key
+      (key (function identity))
+      (test (function <))
+      (start 0)
+      (end (length vec))
+   )
+   (let
+      (  (len (length vec)))
+      (if
+         (zerop len)
+         (return-from bin-search)
+      )
+      (finder
+         obj
+         vec
+         start
+         (if
+            (and end (< end len))
+            end
+            (- len 1)
+         )
+         test
+         key
+      )
+   )
+)
+
+(defun finder
+   (obj vec start end test key)
+   ;(format t "DEBUG: start:~A end:~A vec:~A~%" start end (subseq vec start (+ end 1)))
+   (if
+      (< end start)
+      (return-from finder)
+   )
+   (if
+      (= end start)
+      (return-from finder
+         (unless
+            (funcall test obj (funcall key (aref vec start)))
+            (aref vec start)
+         )
+      )
+   )
+   (let*
+      (  (mid (+ start (round (/ (- end start) 2))))
+         (tmp (aref vec mid))
+         (tst (funcall key tmp))
+      )
+      (if
+         (eql obj tst)
+         (return-from finder tmp)
+      )
+      (if
+         (funcall test obj tst)
+         (return-from finder (finder obj vec start (- mid 1) test key))
+      )
+      (finder obj vec (+ mid 1) end test key)
+   )
+)
+
+(labels
+   (  (foo
+         (x y)
+         (unless x (return-from foo))
+         (PrintExercise
+            "Exercise 6.2"
+            `(bin-search ,(car x) #(0 1 2 3 4 5 6 7 8 9))
+            (car y)
+         )
+         (foo
+            (cdr x)
+            (cdr y)
+         )
+      )
+   )
+   (foo
+     '(   -1 0 1 2 3 4 5 6 7 8 9 10)
+     '("NIL" 0 1 2 3 4 5 6 7 8 9  9)
+   )
+)
+
+(dolist
+   (args
+      '(
+         ("NIL" 3 #(4 5 6 7 8 9))
+         (d 'd #(a b c d e f g h i j) :test (function string<))
+         ((3 c)  3 #((1 a) (2 b) (3 c) (4 d) (5 e) (6 f) (7 g) (8 h) (9 i) (10 j)) :key (function first))
+         ((c 3)  3 #((a 1) (b 2) (c 3) (d 4) (e 5) (f 6) (g 7) (h 8) (i 9) (j 10)) :key (function second))
+         ((d 4) 'd #((a 1) (b 2) (c 3) (d 4) (e 5) (f 6) (g 7) (h 8) (i 9) (j 10)) :key (function car) :test (function string<))
+         ("NIL" 3 #(0 1 2 3 4 5 6 7 8 9) :start 4)
+         ("NIL" 3 #(0 1 2 3 4 5 6 7 8 9) :start 4 :test (function >))
+         ("NIL" 3 #(0 1 2 3 4 5 6 7 8 9) :end   1 :test (function >))
+      )
+   )
+   (PrintExercise
+      "Exercise 6.2"
+      `(bin-search ,@(cdr args))
+      (car args)
+   )
+)
