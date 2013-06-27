@@ -182,3 +182,10 @@
       (car args)
    )
 )
+
+; 6.3
+
+(defun nargs
+   (&rest  args)
+   (length args)
+)
