@@ -189,3 +189,19 @@
    (&rest  args)
    (length args)
 )
+
+(dolist
+   (args
+      '(
+         (0)
+         (1 (1))
+         (2 (1 10))
+         (0 a)
+      )
+   )
+   (PrintExercise
+      "Exercise 6.3"
+      `(nargs ,@(car (cdr args)))
+      (car args)
+   )
+)
