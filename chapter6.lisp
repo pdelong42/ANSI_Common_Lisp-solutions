@@ -205,3 +205,37 @@
       (car args)
    )
 )
+
+; 6.4
+
+(defun winners
+   (fn lst)
+   (unless lst (return-from winners (values nil nil)))
+   (let*
+      (  (winner (car lst))
+         (runner-up)
+         (max (funcall fn winner))
+      )
+      (dolist
+         (obj lst)
+         (let
+            (  (score (funcall fn obj)))
+            (when
+               (> score max)
+               (setf runner-up winner winner obj max score)
+            )
+         )
+      )
+      (values winner runner-up)
+   )
+)
+
+(PrintExercise
+   "Exercise 6.4"
+   '(multiple-value-bind
+      (first second)
+      (winners #'identity '(1 2 3 2 2 3 3 3 4 1 1 2 2))
+      (format nil "test of \"winners\": higest scoring = ~A; runner-up = ~A" first second)
+   )
+   "test of \"winners\": higest scoring = 4; runner-up = 3"
+)
