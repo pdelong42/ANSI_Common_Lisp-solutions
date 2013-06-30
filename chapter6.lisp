@@ -239,3 +239,37 @@
    )
    "test of \"winners\": higest scoring = 4; runner-up = 3"
 )
+
+; 6.5
+
+(defun filter
+   (fn lst)
+   (let
+      (  (acc))
+      (dolist
+         (x lst)
+         (let
+            (  (val (funcall fn x)))
+            (if val (push val acc))
+         )
+      )
+      (nreverse acc)
+   )
+)
+
+(defun my-remove-if
+   (fn lst)
+   (filter
+      (lambda
+         (x)
+         (unless (funcall fn x) x)
+      )
+      lst
+   )
+)
+
+(PrintExercise
+   "Exercise 6.5"
+   '(my-remove-if (lambda (x) (evenp x)) '(1 2 3 4 5 6 7))
+   '(1 3 5 7)
+)
