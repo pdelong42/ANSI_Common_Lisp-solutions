@@ -273,3 +273,38 @@
    '(my-remove-if (lambda (x) (evenp x)) '(1 2 3 4 5 6 7))
    '(1 3 5 7)
 )
+
+; 6.6
+
+(let
+   (  (x))
+   (defun greatest
+      (y)
+      (unless
+         (and x (> x y))
+         (setf x y)
+      )
+      x
+   )
+)
+
+(labels
+   (  (foo
+         (x y)
+         (unless x (return-from foo))
+         (PrintExercise
+            "Exercise 6.6"
+            `(greatest ,(car x))
+            (car y)
+         )
+         (foo
+            (cdr x)
+            (cdr y)
+         )
+      )
+   )
+   (foo
+      '(0 3 0 5 3)
+      '(0 3 3 5 5)
+   )
+)
