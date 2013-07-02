@@ -308,3 +308,44 @@
       '(0 3 3 5 5)
    )
 )
+
+; 6.7
+
+(let
+   (  (x))
+   (defun greater
+      (y)
+      (unless
+         x
+         (setf x y)
+         (return-from greater)
+      )
+      (unless
+         (< x y)
+         (return-from greater)
+      )
+      (setf x y)
+      t
+   )
+)
+
+(labels
+   (  (foo
+         (x y)
+         (unless x (return-from foo))
+         (PrintExercise
+            "Exercise 6.7"
+            `(greater ,(car x))
+            (car y)
+         )
+         (foo
+            (cdr x)
+            (cdr y)
+         )
+      )
+   )
+   (foo
+      '(0 3 3 0)
+      '("NIL" t "NIL" "NIL")
+   )
+)
