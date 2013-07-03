@@ -349,3 +349,59 @@
       '("NIL" t "NIL" "NIL")
    )
 )
+
+; 6.8
+;
+; Suppose "expensive" is a function of one argument, an integer between 0 and
+; 100 inclusive, that returns the result of a time-consuming computation.
+; Define a function "frugal" that returns the same answer, but only calls
+; "expensive" when given an argument it has not seen before.
+
+(defun expensive
+   (x)
+   (+ x 100)
+)
+
+(let
+   (  (memo (make-hash-table)))
+   (defun memo nil memo)
+   (defun frugal
+      (x)
+      (multiple-value-bind
+         (value exists)
+         (gethash x memo)
+         (if exists (return-from frugal (values value exists)))
+         (values
+            (setf
+               (gethash x memo)
+               (expensive x)
+            )
+            exists
+         )
+      )
+   )
+)
+
+(dolist
+   (x
+      '(
+         ((105 nil) (expensive 5))
+         ((105 nil)    (frugal 5))
+         ((105   t)    (frugal 5))
+         ((103 nil)    (frugal 3))
+         ((103   t)    (frugal 3))
+      )
+   )
+   (PrintExercise
+      "Exercise 6.8"
+      `(multiple-value-bind
+         (value exists)
+         ,(car (cdr x))
+         (list value exists)
+      )
+      (car x)
+   )
+)
+
+; ToDo: reformulate the tests of exercise 6.1 to use a loop like the rest of
+; the exercises in this file
