@@ -351,11 +351,6 @@
 )
 
 ; 6.8
-;
-; Suppose "expensive" is a function of one argument, an integer between 0 and
-; 100 inclusive, that returns the result of a time-consuming computation.
-; Define a function "frugal" that returns the same answer, but only calls
-; "expensive" when given an argument it has not seen before.
 
 (defun expensive
    (x)
