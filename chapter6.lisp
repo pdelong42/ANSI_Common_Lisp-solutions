@@ -41,40 +41,22 @@
    )
 )
 
-(PrintExercise
-   "Exercise 6.1 - try a non-default test function"
-   '(tokens "ab12 3cde.f" :test (function alpha-char-p) :start 0)
-   "(ab cde f)"
-)
-
-(PrintExercise
-   "Exercise 6.1 - test defaults explicitly"
-   '(tokens "ab12 3cde.f gh" :test (function constituent) :start 0)
-   "(ab12 3cde.f gh)"
-)
-
-(PrintExercise
-   "Exercise 6.1 - test fewer fields? (not sure what my thoughts were here)"
-   '(tokens "ab12 3cde.f" :test (function constituent) :start 0)
-   "(ab12 3cde.f)"
-)
-
-(PrintExercise
-   "Exercise 6.1 - again, not sure what my thoughts were here"
-   '(tokens "ab12 3cde.f gh" :test (function alpha-char-p) :start 0)
-   "(ab cde f gh)"
-)
-
-(PrintExercise
-   "Exercise 6.1 - testing with defaults only"
-   '(tokens "ab12 3cde.f")
-   "(ab12 3cde.f)"
-)
-
-(PrintExercise
-   "Exercise 6.1"
-   '(tokens "ab12 3cde.f gh")
-   "(ab12 3cde.f gh)"
+(dolist
+   (args
+      '(
+         ("(ab cde f)"       "ab12 3cde.f"    :test (function alpha-char-p) :start 0) ; try a non-default test function
+         ("(ab12 3cde.f gh)" "ab12 3cde.f gh" :test (function constituent)  :start 0) ; test defaults explicitly
+         ("(ab12 3cde.f)"    "ab12 3cde.f"    :test (function constituent)  :start 0) ; test fewer fields? (not sure what my thoughts were here)
+         ("(ab cde f gh)"    "ab12 3cde.f gh" :test (function alpha-char-p) :start 0) ; again, not sure what my thoughts were here
+         ("(ab12 3cde.f)"    "ab12 3cde.f")                                           ; testing with defaults only
+         ("(ab12 3cde.f gh)" "ab12 3cde.f gh")
+      )
+   )
+   (PrintExercise
+      "Exercise 6.1"
+      `(tokens ,@(cdr args))
+      (car args)
+   )
 )
 
 ; 6.2
