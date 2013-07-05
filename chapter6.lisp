@@ -400,3 +400,96 @@
 
 ; ToDo: reformulate the tests of exercise 6.1 to use a loop like the rest of
 ; the exercises in this file
+
+; 6.9
+
+(defun straighten
+   (list)
+   (let
+      (  (x (car (last list))))
+      (if
+         (consp x)
+         (append (butlast list) x)
+         list
+      )
+   )
+)
+
+(labels
+   (  (foo
+         (x y)
+         (unless x (return-from foo))
+         (PrintExercise
+            "Exercise 6.9 - preliminary"
+            `(straighten ',(car x))
+            (car y)
+         )
+         (foo
+            (cdr x)
+            (cdr y)
+         )
+      )
+   )
+   (foo
+      '(
+         (1 2 3 4 5)
+         (1 2 3 nil)
+         (1 2 3 (4))
+         (1 2 3 (4 5))
+         (1 2 3 (4 5 6))
+         (1 2 3 (4 5 6 (7 8 9)))
+      )
+      '(
+         (1 2 3 4 5)
+         (1 2 3 nil)
+         (1 2 3 4)
+         (1 2 3 4 5)
+         (1 2 3 4 5 6)
+         (1 2 3 4 5 6 (7 8 9))
+      )
+   )
+)
+
+(defun my-apply
+   (fn &rest args)
+   (let
+      (  (*print-base* 8))
+      (apply fn (straighten args))
+   )
+)
+
+(labels
+   (  (foo
+         (x y)
+         (unless x (return-from foo))
+         (PrintExercise
+            "Exercise 6.9"
+            `(
+               ,(car x)
+               (lambda
+                  (&rest tmp)
+                  (format nil "(~{~A ~})" tmp)
+               )
+               '(20 21 22 30 40)
+            )
+            (car y)
+         )
+         (foo
+            (cdr x)
+            (cdr y)
+         )
+      )
+   )
+   (foo
+      '(
+         apply
+         my-apply
+         apply
+      )
+      '(
+         (20 21 22 30 40)
+         (24 25 26 36 50)
+         (20 21 22 30 40)
+      )
+   )
+)
