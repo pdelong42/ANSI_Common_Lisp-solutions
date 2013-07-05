@@ -458,38 +458,24 @@
    )
 )
 
-(labels
-   (  (foo
-         (x y)
-         (unless x (return-from foo))
-         (PrintExercise
-            "Exercise 6.9"
-            `(
-               ,(car x)
-               (lambda
-                  (&rest tmp)
-                  (format nil "(~{~A ~})" tmp)
-               )
-               '(20 21 22 30 40)
-            )
-            (car y)
-         )
-         (foo
-            (cdr x)
-            (cdr y)
-         )
+(dolist
+   (x
+      '(
+         (   apply 20 21 22 30 "40 ")
+         (my-apply 24 25 26 36 "50 ")
+         (   apply 20 21 22 30 "40 ")
       )
    )
-   (foo
-      '(
-         apply
-         my-apply
-         apply
+   (PrintExercise
+      "Exercise 6.9"
+      `(
+         ,(car x)
+         (lambda
+            (&rest tmp)
+            (format nil "(~{~A ~})" tmp)
+         )
+         '(20 21 22 30 40)
       )
-      '(
-         (20 21 22 30 40)
-         (24 25 26 36 50)
-         (20 21 22 30 40)
-      )
+      (cdr x)
    )
 )
