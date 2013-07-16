@@ -380,9 +380,6 @@
    )
 )
 
-; ToDo: reformulate the tests of exercise 6.1 to use a loop like the rest of
-; the exercises in this file
-
 ; 6.9
 
 (defun straighten
