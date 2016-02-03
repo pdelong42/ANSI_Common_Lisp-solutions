@@ -1,7 +1,5 @@
 #!/usr/bin/clisp
 
-; I cheated here and used "let*" and "return-from" before they were introduced.
-
 (load "util.lisp")
 
 ; 2.1a
@@ -176,12 +174,13 @@
 
 (defun contains-list?
    (lst)
-   (unless lst (return-from contains-list?))
-   (if
-      (listp (car lst))
-      (return-from contains-list? t)
+   (and
+      (not (null lst))
+         (or
+            (listp (car lst))
+            (contains-list? (cdr lst))
+         )
    )
-   (contains-list? (cdr lst))
 )
 
 (PrintExercise
@@ -194,12 +193,13 @@
 
 (defun rdots
    (x)
-   (unless
+   (and
       (> x 0)
-      (return-from rdots)
+      (progn
+         (format t ".")
+         (rdots (- x 1))
+      )
    )
-   (format t ".")
-   (rdots (- x 1))
 )
 
 (PrintExercise
@@ -228,11 +228,14 @@
 ; 2.8b
 
 (defun rcount
-   (x y)
-   (unless x (return-from rcount 0))
-   (+
-      (if (eql y (car x)) 1 0)
-      (rcount (cdr x) y)
+   (lst a)
+   (or
+      (and (null lst) 0)
+      (if
+         (equal a (car lst))
+         (+ 1 (rcount (cdr lst) a))
+         (rcount (cdr lst) a)
+      )
    )
 )
 
@@ -290,12 +293,11 @@
 
 (defun summit
    (lst)
-   (unless lst (return-from summit 0))
-   (+
-      (summit (cdr lst))
-      (let
-      (  (x (car lst)))
-         (if (null x) 0 x)
+   (if
+      (null lst)
+      0
+      (+ (or (car lst) 0)
+         (summit (cdr lst))
       )
    )
 )
